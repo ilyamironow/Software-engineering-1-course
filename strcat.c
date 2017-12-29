@@ -9,8 +9,9 @@ void main()
 	gets(m2);
 	int i = 0, k;
 	k = strlen(m1);
-	for(i = k; m2[i-k] != '\0'; i++)
+	for(i = k; m2[i-k] != '\0'; i++) {
 		m1[i] = m2[i - k];
+		}
 	m1[i] = '\0'; 
 	printf("%s\n", m1);
 }
