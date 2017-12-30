@@ -6,9 +6,9 @@ void main()
 	gets(m1);
 	gets(m2);
 	int i;
-	for(i = 0; m2[i] != '\0'; i++) {
+	for (i = 0; m2[i] != '\0'; i++) {
 		m1[i] = m2[i];
-		}
+	}
 	m1[i] = '\0'; 
 	printf("%s\n", m1);
 }
