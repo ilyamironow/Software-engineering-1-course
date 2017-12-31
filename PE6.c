@@ -14,7 +14,7 @@ void main()
 		x++;
 	}
 	sum2 *= sum2;
-	dif = sim2 - sum1;
+	dif = sum2 - sum1;
 	if (dif < 0)
 	{
 		dif *= (-1);

@@ -1,16 +1,18 @@
 #include <stdio.h>
-#define N 5
+#define N 3
 void main()
 {
-	int mas1[N], mas2[N];
+	char mas1[N], mas2[N];
 	char i, j, c = 0;
-	for (i = 0; i < N; i++) {
-		scanf("%d", &mas1[i]);
+	for (i = 0; i < N; i++)
+	{
+		mas1[i] = 0;
+		mas2[i] = 0;
 	}
-	for (i = 0; i < N; i++) {
-		scanf("%d", &mas2[i]);
-	}
-	for (i = 0; i < N; i++) {
+	scanf("%s", mas1);
+	scanf("%s", mas2);
+	for (i = 0; i < N; i++) 
+	{
 		if (mas1[i] > mas2[i])
 		{
 			c = 1;
@@ -22,17 +24,22 @@ void main()
 			break;
 		}
 	}
-	if (c == 1) {
-		for (i = 0; i < N; i++) {
-			printf("%d", mas1[i]);
+	if (c == 1) 
+	{
+		for (i = 0; i < N; i++) 
+		{
+			printf("%c", mas1[i]);
 		}
 	}
-	if (c == 2) {
-		for (i = 0; i < N; i++) {
-			printf("%d", mas2[i]);
+	if (c == 2) 
+	{
+		for (i = 0; i < N; i++) 
+		{
+			printf("%c", mas2[i]);
 		}
 	}
-	if (c == 0) {
+	if (c == 0) 
+	{
 		printf("Numbers are equal");
 	}
 	printf("\n");
