@@ -6,6 +6,11 @@ void main()	{
 	int x, l, i = 0, y;
 	char nstr[N];
 	FILE *f = fopen("file1.txt", "r");
+	if (f == 0)
+	{
+		printf("can't open file\n");
+		return ;
+	}
 	do {
 		x = fgetc(f);
 		if ((x == '/') && (l == 0)) {
