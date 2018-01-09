@@ -17,9 +17,9 @@ int thirdBits(void) {
 	return x >> 1;
 }
 int fitsBits(int x, int n) {
-	x = ~ x + 1;
-	x = x >> n;
-	return ! x;
+	n = 32 + (~ n + 1);
+	n = (x << n) >> n;
+	return ! (x ^ n);
 }
 int sign(int x) {
 	return (x >> 31) | ! (! x);
@@ -27,9 +27,9 @@ int sign(int x) {
 int getByte(int x, int n) {
 	return (x >> (8 * n)) & 0xFF;
 }
-int logicalShift(int x, int n) {
-	int a = -1;
-	return (x >> n) ^ (a << (32 - n));
+int logicalShift(int x, int n)
+{
+    return (x >> n) & ~(((1 << 31) >> n) << 1);
 }
 int addOK(int x, int y) {
 	int sum;
@@ -37,7 +37,7 @@ int addOK(int x, int y) {
 	sum = sum >> 31;
 	x = x >> 31;
 	y = y >> 31;
-	return ((sum ^ x) ^ (sum ^ y)) & 1;
+	return !((sum ^ x) & (sum ^ y));
 }
 int bang(int x) {
 	return ~ (x || x) & 1;
@@ -46,7 +46,7 @@ int conditional(int x, int y, int z) {
 	return ! ! x * y + ! x * z;
 }
 int isPower2(int x) {
-	return ! (x & (~ x + 1) ^ x) + ! x * (~ 0);
+	return !(x & (1 << 31)) & !!x & !(x ^ (x & (~x + 1)));
 }
 void main() {
 	int x, y, z, n;
@@ -74,8 +74,8 @@ void main() {
 	scanf("%x %x", &x, &n);
 	printf("%x\n", getByte(x, n));
 
-	printf("logicalShift: x(%%x) and n(%%x)\n");
-	scanf("%x %x", &x, &n);
+	printf("logicalShift: x(%%x) and n(%%d)\n");
+	scanf("%x %d", &x, &n);
 	printf("%x\n", logicalShift(x, n));
 
 	printf("addOK: x(%%x) and y(%%x)\n");
