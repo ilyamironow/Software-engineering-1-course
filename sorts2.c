@@ -7,7 +7,6 @@
 
 void swap(int a[], int i, int j) {
 	int tmp;
-
     tmp = a[i];
     a[i] = a[j];
     a[j] = tmp;
@@ -16,14 +15,14 @@ void swap(int a[], int i, int j) {
 void bubbleSort(int a[], int n) {
     int i, j, tmp;
     int b[n];
-     for(i = 0 ; i < n - 1; i++)
+    for(i = 0 ; i < n - 1; i++)
+	{
+		for(j = 0 ; j < n - i - 1 ; j++)
         {
-       for(j = 0 ; j < n - i - 1 ; j++)
-       {
-           if(a[j] > a[j+1])
-           {
-               swap(a, j, j+1);
-           }
+			if(a[j] > a[j+1])
+            {
+				swap(a, j, j+1);
+            }
         }
     }
 }
@@ -53,7 +52,6 @@ void calcSort(int a[], int n)
 {
     int min, max, i, j, t = 0;
     int * count;
-
     if (a[0] > a[1])
     {
         min = a[1];
@@ -64,7 +62,6 @@ void calcSort(int a[], int n)
         min = a[0];
         max = a[1];
     }
-
     for (i = 2; i < n; i ++)
     {
         if (a[i] > max)
@@ -76,14 +73,16 @@ void calcSort(int a[], int n)
              min = a[i];
         }
     }
-
     count = (int *)calloc(max - min, sizeof(int));
-
+	if (! count)
+	{
+		printf("Ошибка выделения памяти!\n");
+		exit(1);
+	}
     for (i = 0; i < n; i++)
     {
         count[a[i] - min]++;
     }
-
     for (i = min; i <= max; i++)
     {
         for (j = 0; j < count[i - min]; j++)
@@ -92,7 +91,6 @@ void calcSort(int a[], int n)
             t++;
         }
     }
-
     free(count);
 }
 
@@ -102,7 +100,7 @@ void input(int *a, int *n) {
     {
        a[i] = rand();
        // scanf("%d", a+i);
-     }
+    }
 }
 
 int main() {
@@ -110,35 +108,27 @@ int main() {
     clock_t tm;
     FILE *f = fopen("Mass.txt", "w");
     srand(time(NULL));
-
     if (f == NULL)
     {
         printf("File wasn't open\n");
         return 0;
     }
-
     printf("input a number of elements\n" );
     scanf("%d", &n);
-
     if (n <= 1)
     {
         printf("incorrect input");
         exit(0);
     }
-
     int *a;
-
     a = (int *)malloc(n * sizeof(int));
-
     if (a == NULL)
     {
         printf("Error (massive)\n");
         return 0;
     }
-
     printf("Choose the way of sorting:\n 1) Bubble sort\n 2) Quick sort\n 3) Calculating sort\n Input a number 1, 2 or 3\n");
     scanf("%d", &w);
-
     switch(w) {
         case bubble :
         {
@@ -149,9 +139,7 @@ int main() {
             }
             fprintf(f, "\n");
             tm = clock();
-
             bubbleSort(a, n);
-
             tm = clock() - tm;
             printf("%f\n",(double) tm / CLOCKS_PER_SEC);
             break;
@@ -165,11 +153,8 @@ int main() {
             }
             fprintf(f, "\n");
             tm = clock();
-
             quickSort(a, 0, n-1);
-
             tm = clock() - tm;
-
             printf("%f\n",(double) tm / CLOCKS_PER_SEC);
             break;
         }
@@ -195,13 +180,11 @@ int main() {
             return 0;
         }
     }
-
     fprintf(f, "\n");
     for(i = 0; i < n; i++)
     {
         fprintf(f,"%d ", a[i]);
     }
-
     int fclose(FILE *f);
     free(a);
     return 0;
