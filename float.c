@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#define constnum 3
 struct descriptionstruct {
     char *str;
     void (*function)(float x);
-} description[3];
+} description[constnum];
 
 void initialdesription(char *str, void (*function)(float x), int num) { 
     description[num].str = str;
@@ -91,6 +91,24 @@ void third(float x) {
     Result(sign, exponenta, mantissa);
 }
 
+void printer(int num, int x, int y) {
+	if (y) {
+		printf("%d\n", x / y);
+		description[num - 1].function(x / y);
+	} else {
+		if (x) {
+			if (x > 0){
+				printf("+Inf");
+			} else {
+				printf("-Inf");
+			}
+		} else {
+			printf("NaN");
+		}
+	}
+	printf("\n");
+}
+
 int main() {
     if (sizeof(float) == 4) {
         int sizestruct = sizeof(description)/ sizeof(description[0]);
@@ -98,29 +116,14 @@ int main() {
         initialdesription("union with struct with bit fields", second, 1);
         initialdesription("taking an address and dereferencing a pointer", third, 2);
         printDescription(description, sizestruct);
-        printf("Please, choose method: 1 to 3 and input two floats:\n");
-
-        int num;
+        printf("Please, choose method: 1 to %d and input two floats:\n", constnum);
+		int num;
         float x, y = 1;
         scanf("%d %f %f",&num, &x, &y);
-        if (y) {
-            printf("%f\n", x / y);
-            description[num - 1].function(x / y);
-        } else {
-            if (x) {
-                if (x > 0){
-                    printf("+Inf");
-                } else {
-                    printf("-Inf");
-                }
-            } else {
-                printf("NaN");
-            }
-
-        }
-    } else {
-        printf("ERROR: floatSize != 4");
-    }
-	printf("\n");
+		printer(num, x, y);
+	}	
+	else {
+		printf("ERROR: floatSize != 4\n");
+	}
     return 0;
 }
